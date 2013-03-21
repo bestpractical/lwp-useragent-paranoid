@@ -10,5 +10,9 @@ requires 'LWPx::ParanoidHandler';
 requires 'Net::DNS::Paranoid';
 requires 'Scalar::Util';
 
+test_requires 'Test::Requires';
+test_requires 'Test::TCP';
+test_requires 'HTTP::Server::PSGI';
+
 sign;
 WriteAll;

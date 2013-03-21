@@ -17,6 +17,7 @@ name: LWP-UserAgent-Paranoid
 no_index:
   directory:
     - inc
+    - t
 requires:
   LWP::UserAgent: 0
   LWPx::ParanoidHandler: 0
