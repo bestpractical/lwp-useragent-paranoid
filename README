@@ -1,0 +1,83 @@
+NAME
+    LWP::UserAgent::Paranoid - A modern LWPx::ParanoidAgent for safer
+    requests
+
+SYNOPSIS
+        use LWP::UserAgent::Paranoid;
+        my $ua = LWP::UserAgent::Paranoid->new(
+            request_timeout => 5   # seconds
+        );
+
+        # use $ua as a normal LWP::UserAgent...
+        my $response = $ua->get("http://example.com");
+
+DESCRIPTION
+    This module is a more modern LWPx::ParanoidAgent with cleaner internals
+    and a very similar feature set. It is a not a drop-in replacement,
+    however, since the API differs.
+
+    The primary features provided by this module:
+
+  Overall request timeout
+    A configurable timeout from start to finish of a "logical" request made
+    by calling one of LWP::UserAgent's request methods. It encompasses all
+    followed redirects to ensure that you can't be tarpitted by a series of
+    stalling redirects. The default is 5 seconds.
+
+  Blocked private hosts and IP address ranges
+    All new agents are automatically made paranoid of private hostnames and
+    IP address ranges using LWPx::ParanoidHandler. You may access the
+    Net::DNS::Paranoid resolver via the "resolver" method in order to
+    customize the blocked or whitelisted hosts.
+
+EVEN MORE PARANOIA
+    You may also wish to tune standard LWP::UserAgent parameters for greater
+    paranoria depending on your requirements:
+
+  Maximum number of redirects
+    Although generally unnecessary given the request timeout, you can tune
+    "max_redirects" in LWP::UserAgent down from the default of 7.
+
+  Protocols/URI schemes allowed
+    If you don't want to allow requests for schemes other than http and
+    https, you may use "protocols_allowed" in LWP::UserAgent either as a
+    method or as an option to *new*.
+
+        $ua->protocols_allowed(["http", "https"]);
+
+WHY NOT LWPx::ParanoidAgent?
+    LWPx::ParanoidAgent's implemention involves a 2009-era fork of LWP's
+    http and https protocol handlers, and it is no longer maintained. A more
+    maintainable approach is taken by this module and LWPx::ParanoidHandler.
+
+METHODS
+    All methods from LWP::UserAgent are available via inheritence. In
+    addition, the following methods are available:
+
+  request_timeout
+    Gets/sets the timeout which encapsulates each logical request, including
+    any redirects which are followed. The default is 5 seconds.
+
+  resolver
+    Gets/sets the DNS resolver which is used to block private hosts. There
+    is little need to set your own but if you do it should be an
+    Net::DNS::Paranoid object.
+
+    Use the blocking and whitelisting methods on the resolver to customize
+    the behaviour.
+
+BUGS
+    All bugs should be reported via rt.cpan.org
+    <https://rt.cpan.org/Public/Dist/Display.html?Name=LWP-UserAgent-Paranoi
+    d> or bug-LWP-UserAgent-Paranoid@rt.cpan.org.
+
+AUTHOR
+    Thomas Sibley <tsibley@cpan.org>
+
+LICENSE AND COPYRIGHT
+    This software is Copyright (c) 2013 by Best Practical Solutions
+
+    This is free software, licensed under:
+
+      The GNU General Public License, Version 2, June 1991
+

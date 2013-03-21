@@ -1,0 +1,26 @@
+---
+abstract: 'A modern LWPx::ParanoidAgent for safer requests'
+author:
+  - 'Thomas Sibley <tsibley@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.36
+configure_requires:
+  ExtUtils::MakeMaker: 6.36
+distribution_type: module
+dynamic_config: 1
+generated_by: 'Module::Install version 1.06'
+license: gplv2
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: LWP-UserAgent-Paranoid
+no_index:
+  directory:
+    - inc
+requires:
+  LWP::UserAgent: 0
+  LWPx::ParanoidHandler: 0
+  Net::DNS::Paranoid: 0
+resources:
+  license: http://opensource.org/licenses/gpl-license.php
+version: 0.9
