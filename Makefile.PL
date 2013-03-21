@@ -8,6 +8,7 @@ license     'gplv2';
 requires 'LWP::UserAgent';
 requires 'LWPx::ParanoidHandler';
 requires 'Net::DNS::Paranoid';
+requires 'Scalar::Util';
 
 sign;
 WriteAll;

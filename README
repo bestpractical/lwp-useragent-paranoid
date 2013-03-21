@@ -66,6 +66,11 @@ METHODS
     Use the blocking and whitelisting methods on the resolver to customize
     the behaviour.
 
+CAVEATS
+    The overall request timeout is implemented using SIGALRM. Any $SIG{ALRM}
+    handler from an outer scope is replaced in the scope of
+    LWP::UserAgent::Paranoid requests.
+
 BUGS
     All bugs should be reported via rt.cpan.org
     <https://rt.cpan.org/Public/Dist/Display.html?Name=LWP-UserAgent-Paranoi

@@ -13,8 +13,9 @@ use base 'LWP::UserAgent';
 
 our $VERSION = "0.9";
 
-require LWPx::ParanoidHandler;
-require Net::DNS::Paranoid;
+use Scalar::Util          qw/ refaddr /;
+use LWPx::ParanoidHandler qw//;
+use Net::DNS::Paranoid    qw//;
 
 =head1 SYNOPSIS
 
@@ -114,14 +115,20 @@ sub new {
 sub request_timeout { shift->_elem("request_timeout", @_) }
 sub resolver        { shift->_elem("resolver", @_) }
 
+sub __timed_out { Carp::croak("Client timed out request") }
 sub __with_timeout {
     my $method  = shift;
     my $self    = shift;
     my $SUPER   = $self->can("SUPER::$method")
         or Carp::croak("No such method '$method'");
 
-    if (not $SIG{ALRM}) {
-        local $SIG{ALRM} = sub { Carp::croak("Client timed out request") };
+    my $our_alarm = (
+                ref($SIG{ALRM}) eq "CODE"
+        and refaddr($SIG{ALRM}) eq refaddr(\&__timed_out)
+    );
+
+    if (not $our_alarm) {
+        local $SIG{ALRM} = \&__timed_out;
         alarm $self->request_timeout;
         my $ret = $self->$SUPER(@_);
         alarm 0;
@@ -135,6 +142,12 @@ sub request        { __with_timeout("request",        @_) }
 sub simple_request { __with_timeout("simple_request", @_) }
 
 "The truth is out there.";
+
+=head1 CAVEATS
+
+The overall request timeout is implemented using SIGALRM.  Any C<$SIG{ALRM}>
+handler from an outer scope is replaced in the scope of
+L<LWP::UserAgent::Paranoid> requests.
 
 =head1 BUGS
 
