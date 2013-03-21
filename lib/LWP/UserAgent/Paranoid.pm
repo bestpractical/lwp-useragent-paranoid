@@ -114,7 +114,7 @@ sub new {
 sub request_timeout { shift->_elem("request_timeout", @_) }
 sub resolver        { shift->_elem("resolver", @_) }
 
-my $with_timeout = sub {
+sub __with_timeout {
     my $method  = shift;
     my $self    = shift;
     my $SUPER   = $self->can("SUPER::$method")
@@ -131,8 +131,8 @@ my $with_timeout = sub {
     }
 };
 
-sub request        { $with_timeout->("request",        @_) }
-sub simple_request { $with_timeout->("simple_request", @_) }
+sub request        { __with_timeout("request",        @_) }
+sub simple_request { __with_timeout("simple_request", @_) }
 
 "The truth is out there.";
 
