@@ -11,7 +11,7 @@ LWP::UserAgent::Paranoid - A modern LWPx::ParanoidAgent for safer requests
 package LWP::UserAgent::Paranoid;
 use base 'LWP::UserAgent';
 
-our $VERSION = "0.92";
+our $VERSION = "0.93";
 
 use Scalar::Util          qw/ refaddr /;
 use LWPx::ParanoidHandler qw//;
