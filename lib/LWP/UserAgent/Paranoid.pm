@@ -14,6 +14,7 @@ use base 'LWP::UserAgent';
 our $VERSION = "0.93";
 
 use Scalar::Util          qw/ refaddr /;
+use Time::HiRes           qw/ alarm /;
 use LWPx::ParanoidHandler qw//;
 use Net::DNS::Paranoid    qw//;
 
