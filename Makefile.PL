@@ -11,6 +11,7 @@ requires 'LWP::UserAgent';
 requires 'LWPx::ParanoidHandler';
 requires 'Net::DNS::Paranoid';
 requires 'Scalar::Util';
+requires 'Time::HiRes';
 
 test_requires 'Test::Requires';
 test_requires 'Test::TCP';
