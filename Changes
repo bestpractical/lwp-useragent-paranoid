@@ -1,0 +1,3 @@
+0.94    Mon Jul  1 11:04:41 PDT 2013
+
+    * Support fractional seconds in request_timeout (Andrew Rodland)
