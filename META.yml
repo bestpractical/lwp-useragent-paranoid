@@ -26,7 +26,7 @@ requires:
   LWPx::ParanoidHandler: 0
   Net::DNS::Paranoid: 0
   Scalar::Util: 0
-  Time::HiRes: 0
+  Time::HiRes: 1.9716
 resources:
   license: http://opensource.org/licenses/gpl-license.php
   repository: https://github.com/bestpractical/lwp-useragent-paranoid.git
