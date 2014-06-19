@@ -1,3 +1,7 @@
+0.95    Thu Jun 19 12:10:48 PDT 2014
+    * Require Time::HiRes 1.9716 to fix a non-functional alarm()
+      (Thomas Sibley)
+
 0.94    Mon Jul  1 11:04:41 PDT 2013
 
     * Support fractional seconds in request_timeout (Andrew Rodland)
