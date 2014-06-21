@@ -30,7 +30,7 @@ use Carp                  qw//;
     my $response = $ua->get("http://example.com");
 
     # allow requests to localhost and 127.0.0.1
-    $ua->resolver->whitelisted_hosts(['localhost', '127.0.0.1']);
+    $ua->whitelisted_hosts('localhost', '127.0.0.1');
 
 =head1 DESCRIPTION
 
@@ -52,7 +52,12 @@ stalling redirects.  The default is 5 seconds.
 All new agents are automatically made paranoid of private hostnames and IP
 address ranges using L<LWPx::ParanoidHandler>.  You may access the
 L<Net::DNS::Paranoid> resolver via the L</resolver> method in order to
-customize the blocked or whitelisted hosts.
+customize its behaviour.
+
+For simple whitelisting and blacklisting, you may call L</whitelisted_hosts> or
+L</blocked_hosts>.  These methods are proxied to the corresponding methods
+of L<Net::DNS::Paranoid>.  The only difference is that you may pass a list to
+this class' methods.
 
 =head1 EVEN MORE PARANOIA
 
@@ -96,8 +101,14 @@ need to set your own but if you do it should be an L<Net::DNS::Paranoid>
 object.  This attribute is read-only, so if you want to replace the resolver
 you need to call L</new> again to create a new L<LWP::UserAgent::Paranoid>.
 
-Use the blocking and whitelisting methods on the resolver to customize the
-behaviour.
+Use the blocking and whitelisting methods on the resolver, or this class'
+L</whitelisted_hosts> and L</blocked_hosts>, to customize the behaviour.
+
+=head2 whitelisted_hosts / blocked_hosts
+
+Accepts a single arrayref and proxies to the method of the same name on the
+L</resolver>.  For convenience, you may pass a list which will be passed as an
+arrayref to the resolver's method.
 
 =cut
 
@@ -109,6 +120,11 @@ sub new {
 
     my $resolver = delete $opts{resolver};
        $resolver = Net::DNS::Paranoid->new unless $resolver;
+
+    for my $acl (qw(blocked_hosts whitelisted_hosts)) {
+        next unless $opts{$acl};
+        $resolver->$acl( delete $opts{$acl} );
+    }
 
     my $self = $class->SUPER::new(%opts);
     $self->request_timeout($timeout);
@@ -126,6 +142,9 @@ sub resolver        {
         if @_;
     return $self->_elem("resolver");
 }
+
+sub blocked_hosts     { shift->resolver->blocked_hosts(ref $_[0] ? $_[0] : \@_) }
+sub whitelisted_hosts { shift->resolver->whitelisted_hosts(ref $_[0] ? $_[0] : \@_) }
 
 sub __timed_out { Carp::croak("Client timed out request") }
 sub __with_timeout {
