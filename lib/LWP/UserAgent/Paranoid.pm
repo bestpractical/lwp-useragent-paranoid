@@ -173,7 +173,8 @@ Thomas Sibley <tsibley@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
  
-This software is Copyright (c) 2013 by Best Practical Solutions
+This software is primarily Copyright (c) 2013 by Best Practical Solutions,
+with parts of it Copyright (c) 2014-2015 by Thomas Sibley.
  
 This is free software, licensed under:
  
