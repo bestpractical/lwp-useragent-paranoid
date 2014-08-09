@@ -11,6 +11,9 @@ SYNOPSIS
         # use $ua as a normal LWP::UserAgent...
         my $response = $ua->get("http://example.com");
 
+        # allow requests to localhost and 127.0.0.1
+        $ua->resolver->whitelisted_hosts(['localhost', '127.0.0.1']);
+
 DESCRIPTION
     This module is a more modern LWPx::ParanoidAgent with cleaner internals
     and a very similar feature set. It is a not a drop-in replacement,
@@ -60,9 +63,11 @@ METHODS
     seconds are OK.
 
   resolver
-    Gets/sets the DNS resolver which is used to block private hosts. There
-    is little need to set your own but if you do it should be an
-    Net::DNS::Paranoid object.
+    Gets the DNS resolver which is used to block private hosts. There is
+    little need to set your own but if you do it should be an
+    Net::DNS::Paranoid object. This attribute is read-only, so if you want
+    to replace the resolver you need to call "new" again to create a new
+    LWP::UserAgent::Paranoid.
 
     Use the blocking and whitelisting methods on the resolver to customize
     the behaviour.

@@ -17,6 +17,7 @@ use Scalar::Util          qw/ refaddr /;
 use Time::HiRes           qw/ alarm /;
 use LWPx::ParanoidHandler qw//;
 use Net::DNS::Paranoid    qw//;
+use Carp                  qw//;
 
 =head1 SYNOPSIS
 
@@ -27,6 +28,9 @@ use Net::DNS::Paranoid    qw//;
 
     # use $ua as a normal LWP::UserAgent...
     my $response = $ua->get("http://example.com");
+
+    # allow requests to localhost and 127.0.0.1
+    $ua->resolver->whitelisted_hosts(['localhost', '127.0.0.1']);
 
 =head1 DESCRIPTION
 
@@ -87,9 +91,10 @@ are OK.
 
 =head2 resolver
 
-Gets/sets the DNS resolver which is used to block private hosts.  There is
-little need to set your own but if you do it should be an L<Net::DNS::Paranoid>
-object.
+Gets the DNS resolver which is used to block private hosts.  There is little
+need to set your own but if you do it should be an L<Net::DNS::Paranoid>
+object.  This attribute is read-only, so if you want to replace the resolver
+you need to call L</new> again to create a new L<LWP::UserAgent::Paranoid>.
 
 Use the blocking and whitelisting methods on the resolver to customize the
 behaviour.
@@ -107,7 +112,7 @@ sub new {
 
     my $self = $class->SUPER::new(%opts);
     $self->request_timeout($timeout);
-    $self->resolver($resolver);
+    $self->_elem("resolver", $resolver);
 
     LWPx::ParanoidHandler::make_paranoid($self, $self->resolver);
 
@@ -115,7 +120,12 @@ sub new {
 }
 
 sub request_timeout { shift->_elem("request_timeout", @_) }
-sub resolver        { shift->_elem("resolver", @_) }
+sub resolver        {
+    my $self = shift;
+    Carp::croak("resolver is read-only; to use a new resolver, create a new user agent")
+        if @_;
+    return $self->_elem("resolver");
+}
 
 sub __timed_out { Carp::croak("Client timed out request") }
 sub __with_timeout {
