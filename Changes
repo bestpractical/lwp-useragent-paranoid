@@ -1,3 +1,9 @@
+0.96    Sat Aug  9 12:10:11 PDT 2014
+    * Change resolver to read-only since setting it after ->new doesn't
+      actually work.  The method will now die if called as a setter, which
+      should catch existing uses.  Thanks to Randy Stauner for the report!
+      Fixes [rt.cpan.org #97906].
+
 0.95    Thu Jun 19 12:10:48 PDT 2014
     * Require Time::HiRes 1.9716 to fix a non-functional alarm()
       (Thomas Sibley)

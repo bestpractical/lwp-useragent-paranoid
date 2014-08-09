@@ -30,4 +30,4 @@ requires:
 resources:
   license: http://opensource.org/licenses/gpl-license.php
   repository: https://github.com/bestpractical/lwp-useragent-paranoid.git
-version: 0.95
+version: 0.96
