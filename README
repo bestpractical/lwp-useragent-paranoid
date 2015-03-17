@@ -12,7 +12,7 @@ SYNOPSIS
         my $response = $ua->get("http://example.com");
 
         # allow requests to localhost and 127.0.0.1
-        $ua->resolver->whitelisted_hosts(['localhost', '127.0.0.1']);
+        $ua->whitelisted_hosts('localhost', '127.0.0.1');
 
 DESCRIPTION
     This module is a more modern LWPx::ParanoidAgent with cleaner internals
@@ -31,7 +31,12 @@ DESCRIPTION
     All new agents are automatically made paranoid of private hostnames and
     IP address ranges using LWPx::ParanoidHandler. You may access the
     Net::DNS::Paranoid resolver via the "resolver" method in order to
-    customize the blocked or whitelisted hosts.
+    customize its behaviour.
+
+    For simple whitelisting and blacklisting, you may call
+    "whitelisted_hosts" or "blocked_hosts". These methods are proxied to the
+    corresponding methods of Net::DNS::Paranoid. The only difference is that
+    you may pass a list to this class' methods.
 
 EVEN MORE PARANOIA
     You may also wish to tune standard LWP::UserAgent parameters for greater
@@ -69,8 +74,14 @@ METHODS
     to replace the resolver you need to call "new" again to create a new
     LWP::UserAgent::Paranoid.
 
-    Use the blocking and whitelisting methods on the resolver to customize
-    the behaviour.
+    Use the blocking and whitelisting methods on the resolver, or this
+    class' "whitelisted_hosts" and "blocked_hosts", to customize the
+    behaviour.
+
+  whitelisted_hosts / blocked_hosts
+    Accepts a single arrayref and proxies to the method of the same name on
+    the "resolver". For convenience, you may pass a list which will be
+    passed as an arrayref to the resolver's method.
 
 CAVEATS
     The overall request timeout is implemented using SIGALRM. Any $SIG{ALRM}
@@ -87,7 +98,7 @@ AUTHOR
 
 LICENSE AND COPYRIGHT
     This software is primarily Copyright (c) 2013 by Best Practical
-    Solutions, with parts of it Copyright (c) 2014 by Thomas Sibley.
+    Solutions, with parts of it Copyright (c) 2014-2015 by Thomas Sibley.
 
     This is free software, licensed under:
 

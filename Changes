@@ -1,3 +1,10 @@
+0.97    Mon Mar 16 21:44:36 PDT 2015
+
+    * Add whitelisted_hosts and blocked_hosts methods which proxy to resolver
+
+    * LWP::UserAgent::Paranoid::Compat for drop-in compatibility with
+      LWPx::ParanoidAgent
+
 0.96    Sat Aug  9 12:10:11 PDT 2014
     * Change resolver to read-only since setting it after ->new doesn't
       actually work.  The method will now die if called as a setter, which
