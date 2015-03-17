@@ -130,7 +130,7 @@ sub new {
     $self->request_timeout($timeout);
     $self->_elem("resolver", $resolver);
 
-    LWPx::ParanoidHandler::make_paranoid($self, $self->resolver);
+    LWPx::ParanoidHandler::make_paranoid($self, $self->_resolver);
 
     return $self;
 }
@@ -140,11 +140,14 @@ sub resolver        {
     my $self = shift;
     Carp::croak("resolver is read-only; to use a new resolver, create a new user agent")
         if @_;
-    return $self->_elem("resolver");
+    return $self->_resolver;
+}
+sub _resolver {
+    shift->_elem("resolver");
 }
 
-sub blocked_hosts     { shift->resolver->blocked_hosts(ref $_[0] ? $_[0] : \@_) }
-sub whitelisted_hosts { shift->resolver->whitelisted_hosts(ref $_[0] ? $_[0] : \@_) }
+sub blocked_hosts     { shift->_resolver->blocked_hosts(ref $_[0] ? $_[0] : \@_) }
+sub whitelisted_hosts { shift->_resolver->whitelisted_hosts(ref $_[0] ? $_[0] : \@_) }
 
 sub __timed_out { Carp::croak("Client timed out request") }
 sub __with_timeout {
