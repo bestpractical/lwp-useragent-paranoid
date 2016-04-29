@@ -12,7 +12,7 @@ configure_requires:
 distribution_type: module
 dynamic_config: 1
 generated_by: 'Module::Install version 1.14'
-license: gplv2
+license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -27,6 +27,7 @@ requires:
   Net::DNS::Paranoid: 0
   Scalar::Util: 0
   Time::HiRes: '1.9716'
+  Perl: 5.006
 resources:
   license: http://opensource.org/licenses/gpl-license.php
   repository: https://github.com/bestpractical/lwp-useragent-paranoid.git
