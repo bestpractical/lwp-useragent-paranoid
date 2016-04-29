@@ -3,7 +3,7 @@ use inc::Module::Install;
 name        'LWP-UserAgent-Paranoid';
 all_from    'lib/LWP/UserAgent/Paranoid.pm';
 readme_from 'lib/LWP/UserAgent/Paranoid.pm';
-license     'gplv2';
+license     'gpl';
 
 repository 'https://github.com/bestpractical/lwp-useragent-paranoid.git';
 
