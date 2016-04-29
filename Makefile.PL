@@ -17,5 +17,7 @@ test_requires 'Test::Requires';
 test_requires 'Test::TCP';
 test_requires 'HTTP::Server::PSGI';
 
+perl_version '5.006';
+
 sign;
 WriteAll;

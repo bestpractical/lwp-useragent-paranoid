@@ -27,6 +27,7 @@ requires:
   Net::DNS::Paranoid: 0
   Scalar::Util: 0
   Time::HiRes: '1.9716'
+  Perl: 5.006
 resources:
   license: http://opensource.org/licenses/gpl-license.php
   repository: https://github.com/bestpractical/lwp-useragent-paranoid.git
