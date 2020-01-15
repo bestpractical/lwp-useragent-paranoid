@@ -62,7 +62,7 @@ this class' methods.
 =head1 EVEN MORE PARANOIA
 
 You may also wish to tune standard L<LWP::UserAgent> parameters for greater
-paranoria depending on your requirements:
+paranoia depending on your requirements:
 
 =head2 Maximum number of redirects
 
